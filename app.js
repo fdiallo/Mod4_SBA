@@ -1,9 +1,7 @@
-
-//Task 3
 let cart = []
 
 let btnAddTask = document.getElementById("btnAddTask")
-let btnRemoveTask = document.getElementById("btnRemoveTask")
+let btnRemoveLastTask = document.getElementById("btnRemoveLastTask")
 let btnUpdateTask = document.getElementById("btnUpdateTask")
 
 let list = document.getElementById("list")
@@ -14,12 +12,11 @@ let inputCategory = document.getElementById("inputTaskCategory")
 let inputDeadline = document.getElementById("inputTaskDeadline")
 let selectStatusElement = document.getElementById("inputTaskStatus")
 
-
 btnAddTask.addEventListener("click", function () {
-    let taskName = inputName.value;
-    let taskCategory = inputCategory.value
-    let taskDeadline = inputDeadline.value
-    let selectedSatusValue = selectStatusElement.value;
+    let taskName = inputName.value.trim()
+    let taskCategory = inputCategory.value.trim()
+    let taskDeadline = inputDeadline.value.trim()
+    let selectedSatusValue = selectStatusElement.value.trim()
 
     if (taskName === "" && taskCategory === "" && taskDeadline === "" && selectedSatusValue === "") {
         alert("Please enter value for all fields!")
@@ -36,6 +33,7 @@ btnAddTask.addEventListener("click", function () {
         return
     }
     cart.push(task);
+    
     renderCart();
     inputName.value = ""
     inputCategory.value = ""
@@ -43,6 +41,47 @@ btnAddTask.addEventListener("click", function () {
     selectStatusElement.value = "Progress"
 });
 
+btnUpdateTask.addEventListener("click", function () {
+    let taskName = inputName.value.trim()
+    let selectedSatusValue = selectStatusElement.value.trim()
+
+    if (taskName === "") {
+        alert("Task name to update is required!")
+        return;
+    }
+
+    const task = cart.find(task => task.name === taskName)
+
+    if (task !== "undefined") {
+        task.status = selectedSatusValue
+    } else {
+        alert("Task Not Found!")
+    }
+
+    const currentDate = new Date()
+    currentDate.setHours(0, 0, 0, 0)
+
+    for (let task of cart) {
+        const taskDate = new Date(task.deadline)
+        taskDate.setHours(0, 0, 0, 0)
+        
+        if (currentDate > taskDate) {
+            task.deadline = "Overdue"
+        }
+    }
+
+    renderCart()
+
+})
+
+btnRemoveLastTask.addEventListener("click", function () {
+    if (cart.length === 0) {
+        alert("Cart is empty!")
+        return
+    }
+    cart.pop();
+    renderCart();
+});
 
 function renderCart() {
     list.innerHTML = "";
@@ -64,7 +103,6 @@ function renderCart() {
         let listItemStatus = document.createElement("li");
         listItemStatus.innerText = task.status;
         list.appendChild(listItemStatus);
-
 
         let listItemSeparator = document.createElement("span");
         listItemSeparator.innerText = "---------------------------------"
