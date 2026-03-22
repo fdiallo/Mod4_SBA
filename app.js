@@ -44,3 +44,33 @@ btnAddTask.addEventListener("click", function () {
 });
 
 
+function renderCart() {
+    list.innerHTML = "";
+
+    for (let task of cart) {
+
+        let listItemName = document.createElement("li");
+        listItemName.innerText = task.name;
+        list.appendChild(listItemName);
+
+        let listItemCategory = document.createElement("li");
+        listItemCategory.innerText = task.category;
+        list.appendChild(listItemCategory);
+
+        let listItemDeadline = document.createElement("li");
+        listItemDeadline.innerText = task.deadline;
+        list.appendChild(listItemDeadline);
+
+        let listItemStatus = document.createElement("li");
+        listItemStatus.innerText = task.status;
+        list.appendChild(listItemStatus);
+
+
+        let listItemSeparator = document.createElement("span");
+        listItemSeparator.innerText = "---------------------------------"
+        list.appendChild(listItemSeparator)
+    }
+
+}
+
+
