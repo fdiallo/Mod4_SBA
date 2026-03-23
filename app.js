@@ -3,6 +3,7 @@ let cart = []
 let btnAddTask = document.getElementById("btnAddTask")
 let btnRemoveLastTask = document.getElementById("btnRemoveLastTask")
 let btnUpdateTask = document.getElementById("btnUpdateTask")
+let inputFilterTask = document.getElementById("inputFilterTask")
 
 let list = document.getElementById("list")
 const listItems = document.querySelectorAll('#list li')
@@ -33,12 +34,9 @@ btnAddTask.addEventListener("click", function () {
         return
     }
     cart.push(task);
-    
-    renderCart();
-    inputName.value = ""
-    inputCategory.value = ""
-    inputDeadline.value = ""
-    selectStatusElement.value = "Progress"
+
+    renderCart(cart);
+
 });
 
 btnUpdateTask.addEventListener("click", function () {
@@ -64,13 +62,13 @@ btnUpdateTask.addEventListener("click", function () {
     for (let task of cart) {
         const taskDate = new Date(task.deadline)
         taskDate.setHours(0, 0, 0, 0)
-        
+
         if (currentDate > taskDate) {
-            task.deadline = "Overdue"
+            task.status = "Overdue"
         }
     }
 
-    renderCart()
+    renderCart(cart)
 
 })
 
@@ -80,13 +78,19 @@ btnRemoveLastTask.addEventListener("click", function () {
         return
     }
     cart.pop();
-    renderCart();
+    renderCart(cart);
 });
 
-function renderCart() {
+inputFilterTask.addEventListener("change", (event) => {
+    const selectValue = event.target.value
+    const tasks = cart.filter(task => task.status.toLowerCase().includes(selectValue.toLowerCase()))
+    renderCart(tasks)
+})
+
+function renderCart(taskList) {
     list.innerHTML = "";
 
-    for (let task of cart) {
+    for (let task of taskList) {
 
         let listItemName = document.createElement("li");
         listItemName.innerText = task.name;
@@ -108,6 +112,10 @@ function renderCart() {
         listItemSeparator.innerText = "---------------------------------"
         list.appendChild(listItemSeparator)
     }
+
+    inputName.value = ""
+    inputCategory.value = ""
+    inputDeadline.value = ""
 
 }
 

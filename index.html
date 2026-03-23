@@ -11,6 +11,7 @@
 
 <body>
     <section id="task">
+
         <h2>Task Management App</h2>
         <hr><br><br>
         <label for="name">Task Name</label><br>
@@ -32,8 +33,13 @@
         <br><br> <button id="btnAddTask">Add Task</button>
         <button id="btnRemoveLastTask">Remove Last Task</button>
         <button id="btnUpdateTask">Update A Task</button>
-
-
+        <span>Filter Task By Status</span>
+        <select id="inputFilterTask">
+            <option value=""></option>
+            <option value="Progress">Progress</option>
+            <option value="Completed">Completed</option>
+            <option value="Overdue">Overdue</option>
+        </select><br><br>
         <ul id="list"></ul>
 
     </section>
