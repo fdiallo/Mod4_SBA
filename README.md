@@ -1,0 +1,2 @@
+This Task Management App lets users add tasks, update, delete and filter them based on the tasks' status. I encountered a few challenges such as comparing dates when updating tasks' status. Lessons and previous labs helped in successfully completing the application. 
+Areas of improvement may include implementing a local storage to persist data, for instance after refreshing the page. 
